@@ -36,6 +36,9 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json(user, { status: 201 });
   } catch (error) {
-    throw error;
+    return NextResponse.json(
+      { message: `register error ${error}` },
+      { status: 500 },
+    );
   }
 }
