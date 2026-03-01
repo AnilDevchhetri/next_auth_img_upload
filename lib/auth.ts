@@ -60,9 +60,15 @@ const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  session: {},
-  pages: {},
-  secret: "anilsecret",
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60 * 1000, //30 days in second
+  },
+  pages: {
+    signIn: "/login",
+    error: "/login",
+  },
+  secret: process.env.NEXT_AUTH_SECRET,
 };
 
 export default authOptions;
