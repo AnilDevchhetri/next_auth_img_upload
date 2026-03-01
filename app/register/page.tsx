@@ -1,5 +1,6 @@
 'use client'
 import axios from 'axios';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { FcGoogle } from "react-icons/fc";
@@ -16,7 +17,7 @@ const Register = () => {
             const result = await axios.post('/api/auth/register', {
                 name, email, password
             })
-            console.log(result)
+            router.push("/login")
         } catch (error) {
             console.log(error)
         }
@@ -54,7 +55,7 @@ const Register = () => {
                     <hr className='flex-grow border-gray-500' />
 
                 </div>
-                <button className='w-full flex items-center justify-center gap-2 py-2 border border-gray-400 rounded-lg bg-white text-black hover:bg-gray-100 transition-color'>
+                <button className='w-full flex items-center justify-center gap-2 py-2 border border-gray-400 rounded-lg bg-white text-black hover:bg-gray-100 transition-color' onClick={() => signIn('google')}>
                     <FcGoogle />
                     <span>  Sign up with Google</span>
                 </button>

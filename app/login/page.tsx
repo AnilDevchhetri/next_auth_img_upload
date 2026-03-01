@@ -11,12 +11,13 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const router = useRouter();
     const session = useSession()
-    console.log(session)
+    console.log(session?.data?.user)
     const handleSignIn = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const result = await signIn('credentials', { email, password });
             console.log(result)
+            router.push("/")
         } catch (error) { console.log(error) }
     }
     return (
@@ -47,7 +48,7 @@ const Login = () => {
                     <hr className='flex-grow border-gray-500' />
 
                 </div>
-                <button className='w-full flex items-center justify-center gap-2 py-2 border border-gray-400 rounded-lg bg-white text-black hover:bg-gray-100 transition-color'>
+                <button className='w-full flex items-center justify-center gap-2 py-2 border border-gray-400 rounded-lg bg-white text-black hover:bg-gray-100 transition-color' onClick={async () => await signIn('google')}>
                     <FcGoogle />
                     <span>  Sign in with Google</span>
                 </button>
