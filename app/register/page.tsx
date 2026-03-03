@@ -55,7 +55,10 @@ const Register = () => {
                     <hr className='flex-grow border-gray-500' />
 
                 </div>
-                <button className='w-full flex items-center justify-center gap-2 py-2 border border-gray-400 rounded-lg bg-white text-black hover:bg-gray-100 transition-color' onClick={() => signIn('google')}>
+                <button className='w-full flex items-center justify-center gap-2 py-2 border border-gray-400 rounded-lg bg-white text-black hover:bg-gray-100 transition-color' onClick={() => {
+                    signIn('google', { callbackUrl: "/" })
+
+                }}>
                     <FcGoogle />
                     <span>  Sign up with Google</span>
                 </button>

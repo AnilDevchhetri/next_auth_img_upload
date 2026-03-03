@@ -1,13 +1,38 @@
-import React from 'react'
+"use client"
+
+import { signOut, useSession } from 'next-auth/react'
+import Image from 'next/image'
+import React, { useState } from 'react'
 
 const page = () => {
   // console.log(global);
+  const { data } = useSession()
+  console.log(data)
+  const [loading, setLoading] = useState(false);
+
+  const handleSignOut = async () => {
+    setLoading(true)
+    try {
+      await signOut();
+      setLoading(false)
+    } catch {
+      setLoading(false)
+    }
+  }
   return (
-    <div>page</div>
+    <div className='min-h-screen flex flex-col items-center justify-center bg-black text-white px-4'>
+      {data &&
+        <div className='w-full max-w-md border-2 border-white rounded-2xl p-8 shadow-lg text-center relative flex flex-col items-center'>
+          {data.user.image && <div className='relative w-[200px] h-[200px] rounded-full border-2 border-white overflow-hidden'><Image src={data.user.image} fill alt='userimage' className='' /></div>}
+          <h1 className='py-4 text-3xl'>Welcome,{data.user.name}</h1>
+          <button onClick={() => { handleSignOut() }} className='w-full py-2 px-4 bg-white text-black font-semibold rounded-2xl hover:bg-gray-200 transition-colors cursor-pointer'>Sign Out</button>
+        </div>}
+      {!data && <div className='text-white text-2xl'>loading...</div>}
+    </div>
   )
 }
 
 export default page
 
 //https://www.youtube.com/watch?v=kbl-jk5Z05s&t=11827s
-//4:42
+//5:13
