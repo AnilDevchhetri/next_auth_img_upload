@@ -2,11 +2,13 @@
 
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-
+import { FaPencilAlt } from "react-icons/fa";
 const page = () => {
   // console.log(global);
   const { data } = useSession()
+  const router = useRouter();
   console.log(data)
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +25,8 @@ const page = () => {
     <div className='min-h-screen flex flex-col items-center justify-center bg-black text-white px-4'>
       {data &&
         <div className='w-full max-w-md border-2 border-white rounded-2xl p-8 shadow-lg text-center relative flex flex-col items-center'>
+          <FaPencilAlt size={22} color='white' className='absolute right-[20px]' onClick={() => router.push('/edit')} />
+
           {data.user.image && <div className='relative w-[200px] h-[200px] rounded-full border-2 border-white overflow-hidden'><Image src={data.user.image} fill alt='userimage' className='' /></div>}
           <h1 className='py-4 text-3xl'>Welcome,{data.user.name}</h1>
           <button onClick={() => { handleSignOut() }} className='w-full py-2 px-4 bg-white text-black font-semibold rounded-2xl hover:bg-gray-200 transition-colors cursor-pointer'>Sign Out</button>
@@ -35,4 +39,4 @@ const page = () => {
 export default page
 
 //https://www.youtube.com/watch?v=kbl-jk5Z05s&t=11827s
-//5:13
+//6:00
