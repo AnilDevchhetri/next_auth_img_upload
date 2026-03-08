@@ -25,7 +25,7 @@ const page = () => {
     <div className='min-h-screen flex flex-col items-center justify-center bg-black text-white px-4'>
       {data &&
         <div className='w-full max-w-md border-2 border-white rounded-2xl p-8 shadow-lg text-center relative flex flex-col items-center'>
-          <FaPencilAlt size={22} color='white' className='absolute right-[20px]' onClick={() => router.push('/edit')} />
+          <FaPencilAlt size={22} color='white' className='absolute right-[20px] cursor-pointer' onClick={() => router.push('/edit')} />
 
           {data.user.image && <div className='relative w-[200px] h-[200px] rounded-full border-2 border-white overflow-hidden'><Image src={data.user.image} fill alt='userimage' className='' /></div>}
           <h1 className='py-4 text-3xl'>Welcome,{data.user.name}</h1>
@@ -39,4 +39,4 @@ const page = () => {
 export default page
 
 //https://www.youtube.com/watch?v=kbl-jk5Z05s&t=11827s
-//6:00
+//7:18
