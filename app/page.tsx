@@ -9,7 +9,7 @@ const page = () => {
   // console.log(global);
   const { data } = useSession()
   const router = useRouter();
-  console.log(data)
+  console.log("data is", data)
   const [loading, setLoading] = useState(false);
 
   const handleSignOut = async () => {
@@ -39,4 +39,4 @@ const page = () => {
 export default page
 
 //https://www.youtube.com/watch?v=kbl-jk5Z05s&t=11827s
-//7:18
+//7:27
