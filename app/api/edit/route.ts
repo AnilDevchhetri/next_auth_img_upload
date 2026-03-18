@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const name = formData.get("name") as string;
     const file = formData.get("file") as Blob | null;
-    let imageUrl = session.user.image ?? null;
+    let imageUrl;
     if (file) {
       imageUrl = await uploadOnCloudinary(file);
     }

@@ -1,18 +1,21 @@
 'use client'
+import { userDataContext } from '@/context/UserContext';
 import axios from 'axios';
 import { useSession } from 'next-auth/react'
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { CgProfile } from "react-icons/cg";
 
 
 const edit = () => {
-  const { data } = useSession();
+  const data = useContext(userDataContext);
   const [name, setName] = useState('')
   const [frontendImage, setFrontendImage] = useState('')
   const [backendImage, setBackendImage] = useState<File>()
   const imageInput = useRef<HTMLInputElement>(null)
-
+  const [loading, setLoading] = useState(false)
+  const router = useRouter();
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (!files || files.length == 0) return
@@ -23,6 +26,10 @@ const edit = () => {
   }
   const hanldeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) { return }
+    setLoading(true);
+
+
     try {
       const formData = new FormData();
       formData.append("name", name);
@@ -30,15 +37,20 @@ const edit = () => {
         formData.append("file", backendImage)
       }
       const result = await axios.post('/api/edit', formData)
+      data?.setUser(result.data)
       console.log(result)
+      //  router.push('/')
+      setLoading(false)
+
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
   useEffect(() => {
     if (data) {
-      setName(data?.user.name as string)
-      setFrontendImage(data?.user.image as string)
+      setName(data.user?.name as string)
+      setFrontendImage(data.user?.image as string)
     }
   }, [data])
   return (
@@ -56,7 +68,7 @@ const edit = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <button className='w-full py-2 px-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-colors'>Save</button>
+          <button className='w-full py-2 px-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-colors' disabled={loading}>{loading ? "Saving..." : "Save"}</button>
         </form>
       </div>
     </div>

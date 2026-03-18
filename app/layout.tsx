@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import ClientProvider from "@/ClientProvider";
+import UserContext from "@/context/UserContext";
 
 
 export const metadata: Metadata = {
@@ -22,7 +23,9 @@ export default function RootLayout({
         className={` antialiased`}
       >
         <ClientProvider>
-          {children}
+          <UserContext>
+            {children}
+          </UserContext>
         </ClientProvider>
 
       </body>
