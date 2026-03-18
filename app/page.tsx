@@ -39,5 +39,3 @@ const page = () => {
 
 export default page
 
-//https://www.youtube.com/watch?v=kbl-jk5Z05s&t=11827s
-//7:27
